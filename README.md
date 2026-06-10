@@ -1,215 +1,205 @@
-# Gesture-Controlled-Robotic-arm-
-Arduino and Python based robotic arm with gesture/control system
-ARM CODE - Arduino code to be uploaded into arm aarduino 
-GLOVE CODE - Arduino code to be uploaded into glove 
-PYTHON CODE - consists commands to run simulation CV A gesture-controlled robotic hand system that uses MediaPipe for hand tracking, MuJoCo for physics-based simulation, and Arduino for real-time control of robotic movements.
+# 🤖 Robotic Hand Controlled Using Dual Modes (Laptop Camera & Flex Sensor Glove)
 
----
-🎥 robotic hand demo
+A robotic hand capable of mimicking human finger movements using **two different control modes**:
 
+1. **Vision-Based Control** using a laptop camera.
+2. **Flex Sensor Glove Control** using wireless communication.
 
+The system allows real-time gesture replication and demonstrates human-machine interaction using computer vision, sensors, and embedded systems.
 
 
+<div align="center">
+  <img src="images/output2.gif" width="400">
+</div>
 
+<br></br>
 
-## 🧠 Overview
-This project enables natural human-computer interaction by capturing hand gestures using a webcam and translating them into robotic finger movements.
+<div align="center">
+  <img src="images/hand2.jpeg" width="400">
+</div>
 
-It integrates:
-	•	MediaPipe for hand tracking
-	•	MuJoCo for physics-based simulation
-	•	Arduino for real-world hardware control
-
-The system evolves from basic gesture detection to a fully simulated robotic hand, with ongoing integration into a physical robotic hand prototype.
 
 ---
 
-🎯 Problem Statement
+## 📌 Features
 
-Traditional robotic systems rely on manual controllers or pre-programmed instructions.
-This project aims to develop an intuitive, real-time gesture-based control system that allows users to control robotic hands naturally using human gestures.
+✅ Dual control modes
+
+✅ Real-time finger movement replication
+
+✅ Wireless glove communication
+
+✅ Individual finger control
+
+✅ Computer vision hand tracking
+
+✅ NRF24L01 wireless transceiver communication
+
+✅ Servo-driven robotic hand
+
 
 ---
-## ⚙️ Technologies Used
-- Python  
-- OpenCV  
-- MediaPipe (Hand Tracking)  
-- NumPy  
-- Matplotlib (Early Simulation)  
-- MuJoCo (Physics-based Robotic Simulation)  
-- Computer Vision  
-- Robotics Simulation  
+
+## 🛠 Hardware Used
+
+### Robotic Hand Side
+
+- Arduino Nano 
+- 5 Finger Servo Motors
+- NRF24L01 Transceiver Module
+- Power Supply
+
+### Glove Side
+
+- Flex Sensors (1 per finger)
+- Arduino Nano
+- NRF24L01 Transceiver Module
+- Glove Mount
+
+### Vision Mode
+
+- Laptop Camera 
+- Arduino Nano 
+- Servo Controlled Robotic Hand
+
+<div align="center">
+  <img src="images/conn.png" width="800" height="500">
+</div>
+
 
 ---
 
-## 🔬 Key Features
-
-- 🎯 **Real-time hand gesture tracking**  
-- 🤖 **Joint-level robotic finger control**  
-- 📐 **Accurate angle calculation using kinematics**  
-- 🎮 **Smooth motion using interpolation**  
-- 🧊 **Noise reduction (dead zones + filtering)**  
-- ⚡ **Real-time FPS and performance monitoring**  
-- 🧩 **Modular design (Simulation + Hardware)**  
-
-  ---
+## 📷 Mode 1: Laptop Camera Control
 
+In this mode:
 
- ## 🌍 Applications
+1. The laptop camera captures the user's hand.
+2. Hand landmarks are detected using computer vision.
+3. Finger bend angles are calculated.
+4. Corresponding commands are sent to the robotic hand.
+5. The robotic hand mirrors the detected hand movements.
+
+### Workflow
 
-This gesture-controlled robotic hand system has potential applications in various real-world domains:
+```text
+Laptop Camera
+      ↓
+Hand Detection
+      ↓
+Finger Angle Calculation
+      ↓
+Serial Communication
+      ↓
+Arduino
+      ↓
+Servo Motors
+      ↓
+Robotic Hand Movement
+```
 
-- 🦾 **Prosthetics & Assistive Technology**  
-  Can be used to develop advanced prosthetic hands controlled by natural human gestures.
-
-- 🏥 **Medical & Rehabilitation**  
-  Useful in physiotherapy and rehabilitation systems for hand movement training and recovery.
+---
 
-- 🏭 **Industrial Robotics**  
-  Enables intuitive control of robotic arms for tasks in manufacturing and automation.
+## 🧤 Mode 2: Flex Sensor Glove Control
 
-- 🎮 **Virtual Reality (VR) & Gaming**  
-  Enhances user interaction by enabling gesture-based control in immersive environments.
+In this mode:
 
-- 🧠 **Human-Computer Interaction (HCI)**  
-  Provides a natural and contactless interface for controlling machines and digital systems.
+1. Flex sensors mounted on a glove detect finger bending.
+2. Sensor values are read by an Arduino.
+3. Data is transmitted wirelessly using NRF24L01.
+4. Receiver Arduino receives the finger positions.
+5. Servo motors replicate the hand posture.
 
-- 🎓 **Education & Research**  
-  Serves as a practical platform for learning robotics, AI, and embedded systems.
 
-- 🪖 **Defense & Hazardous Environments**  
-  Can be used for remote operation of robotic systems in dangerous or inaccessible areas.
-  CIRCUIT DIAGRAM
+<div align="center">
+  <img src="images/hand.jpeg" width="400">
+</div>
 
-FIG 1 : Circuit diagram for robotic arm
 
+### Workflow
 
-FIG 2 : Circuit diagram without Transceiver for robotic arm 
+```text
+Flex Sensors
+      ↓
+Arduino Transmitter
+      ↓
+NRF24L01
+      ↓
+Wireless Communication
+      ↓
+NRF24L01 Receiver
+      ↓
+Arduino Receiver
+      ↓
+Servo Motors
+      ↓
+Robotic Hand Movement
+```
 
+---
 
+## 📡 Wireless Communication
 
-To connect the Transceiver to the circuit in fig 2 below mentioned connections can be used
-nRF24L01 to arduino Nano
- GND -> GND
- VCC -> 3.3
- CE -> D7
- CSN -> D8
- SCK ->D13
- MOSI ->D11
- MISO ->D12
- 
+The glove mode uses:
 
-FIG 3 : Arm Connection
+### NRF24L01 Transceiver Modules
 
-Stage 1: Powering the Servos (The Buck Converter)
-Connect your 12V Battery to the IN+ and IN- on the Buck Converter.
-Ensure the Buck Converter is tuned to exactly 5 Volts on the output.
-Take the Red wires from all 5 servos and connect them to the Buck Converter's OUT+.
-Take the Brown/Black wires from all 5 servos and connect them to the Buck Converter's OUT-.
-CRITICAL STEP: Connect a jumper wire from the Buck Converter's OUT- to any GND pin on the Arduino Nano. 
-Stage 2: Servo Control Signals
-Connect the Orange/Yellow signal wires from your 5 servos to the Arduino Nano digital pins:
-Thumb Servo -> D5
-Index Servo -> D3
-Middle Servo -> D6
-Ring Servo -> D9
-Pinky Servo -> D10
-Stage 3: The Wireless Module (nRF24L01)
-Connect the 7 pins of the nRF24L01 to the Arduino Nano.
-The nRF24L01 must be connected to 3.3V. It will break if connected to 5V
-VCC ->3V3 (Arduino 3.3V pin)
-GND -> GND (Any Arduino Ground pin)
-CE -> D7
-CSN -> D8
-MOSI -> D11
-MISO -> D12
-SCK -> D13
+Features:
 
+- 2.4 GHz Communication
+- Low Power Consumption
+- Fast Data Transfer
+- Reliable Wireless Control
+- Suitable for Real-Time Robotics Applications
 
+<div align="center">
+  <img src="images/output1.gif" width="400">
+</div>
 
-FIG 4 : Circuit diagram for glove
 
+---
 
-FIG 5 : Glove Connection
-Stage 1: The nRF24L01 Wireless Module
-Connect the 7 pins of the nRF24L01 to the Arduino Nano.
-The nRF24L01 must be connected to 3.3V. Do not use 5V
-nRF24L01 Pin	Arduino Nano Pin
-VCC -> 3V3 (3.3V)
-GND ->GND
-CE->D7
-CSN->	D8
-MOSI->D11
-MISO->D12
-SCK->	D13
-Stage 2: The Flex Sensor Circuit (Voltage Divider)
-For EVERY finger, build circuit on your breadboard:
-Connect Pin 1 of the Flex Sensor to the Arduino's 5V pin.
-Connect Pin 2 of the Flex Sensor to an Analog Pin (e.g., A0).
-Connect one end of a 10kΩ Resistor to that SAME Analog Pin (A0).
-Connect the other end of the 10kΩ Resistor to GND.
-Visually, it looks like this:
+## 🎯 Applications
 
+- Prosthetic Research
+- Human-Machine Interfaces
+- Robotics Education
+- Teleoperation Systems
+- Gesture-Controlled Robots
+- Rehabilitation Systems
+- Assistive Technologies
 
+---
 
+## 🚀 Future Improvements
 
-Analog Pin Mapping:
-Thumb Circuit -> A0
-Index Circuit -> A1
-Middle Circuit -> A2
-Ring Circuit -> A3
-Pinky Circuit -> A4
-Stage 3: Powering the Glove
-plug the Glove's Arduino Nano directly into your computer or a standard USB Power Bank using a USB cable.
+- Wireless Camera Control
+- Mobile App Integration
+- Machine Learning Gesture Recognition
+- Haptic Feedback Glove
+- Bluetooth/Wi-Fi Connectivity
+- Additional Degrees of Freedom
 
+---
 
+## 👨‍💻 Technologies Used
 
-FIGURE ARE IN THE LINK BEFORE AND FOR MORE INFO CHECK THE DOC BELOW
+- Arduino
+- Servo Motors
+- Computer Vision
+- NRF24L01 Wireless Modules
+- Embedded Systems
+- Hand Gesture Tracking
 
+---
 
+## 📄 License
 
+This project is intended for educational, research, and robotics learning purposes.
 
+## 👨‍💻 Author
 
+**Pulkit Garg**
 
+Contributions made by Yenepoya university student Shahal Mohammed as well as Sahyadri student Akshay V Shetty.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-LINKS 
-
-Github consist of Arduino code for glove and arm and also python code 
-Google drive - https://drive.google.com/drive/folders/1O0cHtS1nPrh4Wb4ZY2ksHELJvQQte4uY?usp=sharing
-This consist of images of circuit diagram 
-Youtube reference - https://youtu.be/gmz7eOB-tCg?si=ICIN6Kyr2OHmHqep
-This consist of video which has done cv control
-3D file - Hand and Forarm - InMoov 
-This is a Open  source project which consist 3D model and stl file ready to print of different human body parts 
-Working videos - https://drive.google.com/drive/folders/1px4CgGKU-tw11mJ0WrqwdxcCiQLmENcb?usp=sharing
-DOCS - https://docs.google.com/document/d/1x6gGh7hJj96BO0geRdBvMvd2BCGM97Z4jWJj5-chdZE/edit?usp=sharing
-
-
+---

@@ -21,7 +21,7 @@ print("Libraries imported successfully!")
 # -----------------------------
 # CONFIGURATION
 # -----------------------------
-COM_PORT = 'COM7'  # Update if your Arduino uses a different port
+COM_PORT = '/dev/ttyUSB0'  # Update if your Arduino uses a different port
 BAUD_RATE = 9600
 
 # -----------------------------
